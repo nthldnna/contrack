@@ -78,10 +78,11 @@ export async function getTopMaterials() {
 }
 
 export async function getSupplierDistribution() {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("materials")
-    .select("supplier_id, suppliers(supplier_name)")
-    .limit(100);
+    .select("supplier_id, suppliers!inner(supplier_name)");
+
+  console.log("[v0] Supplier distribution data:", data, error);
 
   const map: Record<string, number> = {};
 
@@ -90,8 +91,11 @@ export async function getSupplierDistribution() {
     map[name] = (map[name] || 0) + 1;
   });
 
-  return Object.entries(map).map(([name, value]) => ({
+  const result = Object.entries(map).map(([name, value]) => ({
     supplier_name: name,
     count: value,
   }));
+
+  console.log("[v0] Supplier distribution result:", result);
+  return result;
 }
