@@ -198,23 +198,24 @@ export default function DashboardPage() {
           {/* SUPPLIER DISTRIBUTION */}
           <ChartCard title="Supplier Distribution">
             <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={supplierChart} layout="vertical">
+              <BarChart data={supplierChart}>
                 <defs>
-                  <linearGradient id="colorSupplier" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#6eb5d1" />
-                    <stop offset="100%" stopColor="#0d323b" />
+                  <linearGradient id="colorSupplier" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#0d323b" />
+                    <stop offset="100%" stopColor="#4a9fb8" />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#dceaff" />
-                <XAxis type="number" stroke="#0d323b" opacity={0.6} />
-                <YAxis
+                <XAxis
                   dataKey="supplier_name"
-                  type="category"
                   stroke="#0d323b"
                   opacity={0.6}
-                  width={120}
+                  angle={-45}
+                  textAnchor="end"
+                  height={100}
                   tick={{ fontSize: 12 }}
                 />
+                <YAxis stroke="#0d323b" opacity={0.6} />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "#ffffff",
@@ -225,7 +226,7 @@ export default function DashboardPage() {
                 <Bar
                   dataKey="count"
                   fill="url(#colorSupplier)"
-                  radius={[0, 8, 8, 0]}
+                  radius={[8, 8, 0, 0]}
                 />
               </BarChart>
             </ResponsiveContainer>
