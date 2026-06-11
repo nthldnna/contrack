@@ -1,0 +1,57 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap");
+@import "tailwindcss";
+
+:root {
+  --white-blue: #f5f9ff;
+  --light-blue: #dceaff;
+  --dark-blue: #0d323b;
+}
+
+@font-face {
+  font-family: "SaCrayon";
+  src: url("/assets/fonts/SaCrayonHandwriting-Regular2.otf") format("opentype");
+}
+
+.font-saCrayon {
+  font-family: "SaCrayon";
+}
+
+body {
+  font-family: var(--font-outfit);
+}
+
+.dark-blue {
+  color: var(--dark-blue);
+}
+
+.ring-dark-blue {
+    outline: 2px solid var(--light-blue); 
+}
+
+.bg-white-blue {
+  background-color: var(--light-blue);
+}
+
+.btn-main {
+  background-color: var(--white-blue);
+  color: var(--dark-blue);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-main:hover {
+  background-color: var(--dark-blue);
+  color: var(--white-blue);
+  transform: translateY(-2px);
+}
+
+.btn-sub {
+  background-color: var(--dark-blue);
+  color: var(--white-blue);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-sub:hover {
+  background-color: var(--white-blue);
+  color: var(--dark-blue);
+  transform: translateY(-2px);
+}
