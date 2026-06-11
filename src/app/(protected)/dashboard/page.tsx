@@ -22,6 +22,7 @@ import {
   getStockChartData,
   getCategoryDistribution,
   getTopMaterials,
+  getSupplierDistribution,
 } from "@/src/lib/modules/dashboard";
 
 const COLORS = ["#0d323b", "#1e5a6b", "#2d7a8b", "#4a9fb8", "#6eb5d1"];
@@ -31,21 +32,24 @@ export default function DashboardPage() {
   const [stockChart, setStockChart] = useState<any[]>([]);
   const [categoryChart, setCategoryChart] = useState<any[]>([]);
   const [topMaterials, setTopMaterials] = useState<any[]>([]);
+  const [supplierChart, setSupplierChart] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const load = async () => {
-      const [s, stock, cat, top] = await Promise.all([
+      const [s, stock, cat, top, suppliers] = await Promise.all([
         getDashboardStats(),
         getStockChartData(),
         getCategoryDistribution(),
         getTopMaterials(),
+        getSupplierDistribution(),
       ]);
 
       setStats(s);
       setStockChart(stock);
       setCategoryChart(cat);
       setTopMaterials(top);
+      setSupplierChart(suppliers);
       setLoading(false);
     };
 
@@ -147,47 +151,86 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* STOCK MOVEMENT TREND */}
-        <ChartCard title="Stock Movement Trend">
-          <ResponsiveContainer width="100%" height={350}>
-            <LineChart data={stockChart}>
-              <defs>
-                <linearGradient id="colorIn" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
-                  <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#dceaff" />
-              <XAxis dataKey="date" stroke="#0d323b" opacity={0.6} />
-              <YAxis stroke="#0d323b" opacity={0.6} />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#ffffff",
-                  border: "1px solid #dceaff",
-                  borderRadius: "8px",
-                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-                }}
-              />
-              <Legend />
-              <Line
-                type="monotone"
-                dataKey="in"
-                stroke="#10b981"
-                strokeWidth={2}
-                dot={false}
-                name="Stock In"
-              />
-              <Line
-                type="monotone"
-                dataKey="out"
-                stroke="#ef4444"
-                strokeWidth={2}
-                dot={false}
-                name="Stock Out"
-              />
-            </LineChart>
-          </ResponsiveContainer>
-        </ChartCard>
+        {/* STOCK MOVEMENT & SUPPLIER DISTRIBUTION */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* STOCK MOVEMENT TREND */}
+          <ChartCard title="Stock Movement Trend">
+            <ResponsiveContainer width="100%" height={350}>
+              <LineChart data={stockChart}>
+                <defs>
+                  <linearGradient id="colorIn" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
+                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#dceaff" />
+                <XAxis dataKey="date" stroke="#0d323b" opacity={0.6} />
+                <YAxis stroke="#0d323b" opacity={0.6} />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #dceaff",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                  }}
+                />
+                <Legend />
+                <Line
+                  type="monotone"
+                  dataKey="in"
+                  stroke="#10b981"
+                  strokeWidth={2}
+                  dot={false}
+                  name="Stock In"
+                />
+                <Line
+                  type="monotone"
+                  dataKey="out"
+                  stroke="#ef4444"
+                  strokeWidth={2}
+                  dot={false}
+                  name="Stock Out"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </ChartCard>
+
+          {/* SUPPLIER DISTRIBUTION */}
+          <ChartCard title="Supplier Distribution">
+            <ResponsiveContainer width="100%" height={350}>
+              <BarChart data={supplierChart} layout="vertical">
+                <defs>
+                  <linearGradient id="colorSupplier" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0%" stopColor="#6eb5d1" />
+                    <stop offset="100%" stopColor="#0d323b" />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#dceaff" />
+                <XAxis type="number" stroke="#0d323b" opacity={0.6} />
+                <YAxis
+                  dataKey="supplier_name"
+                  type="category"
+                  stroke="#0d323b"
+                  opacity={0.6}
+                  width={120}
+                  tick={{ fontSize: 12 }}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #dceaff",
+                    borderRadius: "8px",
+                  }}
+                />
+                <Bar
+                  dataKey="count"
+                  fill="url(#colorSupplier)"
+                  radius={[0, 8, 8, 0]}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartCard>
+        </div>
 
         {/* CHARTS GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">

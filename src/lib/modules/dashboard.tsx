@@ -76,3 +76,22 @@ export async function getTopMaterials() {
 
   return data || [];
 }
+
+export async function getSupplierDistribution() {
+  const { data } = await supabase
+    .from("materials")
+    .select("supplier_id, suppliers(supplier_name)")
+    .limit(100);
+
+  const map: Record<string, number> = {};
+
+  (data || []).forEach((m: any) => {
+    const name = m.suppliers?.supplier_name || "Unknown";
+    map[name] = (map[name] || 0) + 1;
+  });
+
+  return Object.entries(map).map(([name, value]) => ({
+    supplier_name: name,
+    count: value,
+  }));
+}
