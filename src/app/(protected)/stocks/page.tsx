@@ -125,7 +125,7 @@ export default function StocksPage() {
 
         <button
           onClick={() => setIsCreateOpen(true)}
-          className="px-4 py-2 bg-green-600 text-white rounded"
+          className="px-4 py-2 btn-sub border border-black/10 py-2 rounded-sm"
         >
           + Add Stock
         </button>

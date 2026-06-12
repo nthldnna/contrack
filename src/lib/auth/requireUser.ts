@@ -11,8 +11,14 @@ export async function requireUser() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/login");
+    redirect("/login"); // stops execution (important)
   }
 
-  return { user, supabase };
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
+
+  return { user, profile };
 }

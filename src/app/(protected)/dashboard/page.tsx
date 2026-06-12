@@ -24,6 +24,8 @@ import {
   getTopMaterials,
   getSupplierDistribution,
 } from "@/src/lib/modules/dashboard";
+import Link from "next/link";
+import { Box, Tags, Truck, Ruler } from "lucide-react";
 
 const COLORS = ["#0d323b", "#1e5a6b", "#2d7a8b", "#4a9fb8", "#6eb5d1"];
 
@@ -56,61 +58,35 @@ export default function DashboardPage() {
     load();
   }, []);
 
-  const StatCard = ({
-    label,
-    value,
-    icon: Icon,
-  }: {
-    label: string;
-    value: number | undefined;
-    icon?: React.ReactNode;
-  }) => (
-    <div className="bg-gradient-to-br from-white-blue via-white to-white border border-light-blue rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm font-medium text-dark-blue opacity-70 mb-2">
-            {label}
-          </p>
-          <p className="text-3xl font-bold dark-blue">
-            {loading ? "—" : value || 0}
-          </p>
-        </div>
-        {Icon && <div className="text-light-blue opacity-30">{Icon}</div>}
-      </div>
+  const StatCard = ({ label, value }: any) => (
+    <div className="rounded-2xl bg-white border border-slate-100 p-5 shadow-sm hover:shadow-md transition">
+      <p className="text-xs text-slate-500 mb-2">{label}</p>
+      <p className="text-2xl font-semibold text-slate-900">
+        {loading ? "—" : value || 0}
+      </p>
     </div>
   );
 
-  const ChartCard = ({
-    title,
-    children,
-  }: {
-    title: string;
-    children: React.ReactNode;
-  }) => (
-    <div className="bg-white border border-light-blue rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300">
-      <h2 className="text-lg font-semibold dark-blue mb-6">{title}</h2>
+  const ChartCard = ({ title, children }: any) => (
+    <div className="rounded-2xl bg-white border border-slate-100 p-5 shadow-sm">
+      <h2 className="text-sm font-medium text-slate-700 mb-4">{title}</h2>
       {children}
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white-blue via-white to-white-blue">
-      <div className="max-w-7xl mx-auto p-6 lg:p-8 space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      <div className="max-w-6xl mx-auto px-5 py-8 space-y-6">
         {/* HEADER */}
-        <div className="space-y-2">
-          <h1 className="text-4xl font-bold dark-blue">Inventory Dashboard</h1>
-          <p className="text-dark-blue opacity-60 text-base">
+        <div className="space-y-1">
+          <h1 className="text-2xl font-semibold text-slate-900 tracking-tight">
+            Inventory Dashboard
+          </h1>
+          <p className="text-sm text-slate-500">
             Real-time warehouse analytics and insights
           </p>
         </div>
 
-        {/* STATS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-          <StatCard label="Total Materials" value={stats?.totalMaterials} />
-          <StatCard label="Categories" value={stats?.totalCategories} />
-          <StatCard label="Suppliers" value={stats?.totalSuppliers} />
-          <StatCard label="Units" value={stats?.totalUnits} />
-        </div>
 
         {/* KEY METRICS */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -138,7 +114,7 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <div className="bg-gradient-to-br from-blue-50 to-white border border-light-blue rounded-2xl p-6 shadow-md">
+          <div className="bg-gradient-to-br from-blue-50 to-white border border-black/10 rounded-2xl p-6 shadow-md">
             <p className="text-sm font-medium dark-blue opacity-70 mb-2">
               Current Stock
             </p>
@@ -150,31 +126,31 @@ export default function DashboardPage() {
             </p>
           </div>
         </div>
-
-        {/* STOCK MOVEMENT & SUPPLIER DISTRIBUTION */}
+        {/* TOP SECTION: STATS + CHART (2x2 PREMIUM GRID) */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          {/* STOCK MOVEMENT TREND */}
+
+
+
+          {/* RIGHT SIDE - STOCK MOVEMENT CHART */}
           <ChartCard title="Stock Movement Trend">
-            <ResponsiveContainer width="100%" height={350}>
+            <ResponsiveContainer width="100%" height={250}>
               <LineChart data={stockChart}>
-                <defs>
-                  <linearGradient id="colorIn" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10b981" stopOpacity={0.3} />
-                    <stop offset="95%" stopColor="#10b981" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#dceaff" />
-                <XAxis dataKey="date" stroke="#0d323b" opacity={0.6} />
-                <YAxis stroke="#0d323b" opacity={0.6} />
+
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="date" stroke="#64748b" opacity={0.6} />
+                <YAxis stroke="#64748b" opacity={0.6} />
+
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #dceaff",
-                    borderRadius: "8px",
-                    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "12px",
+                    boxShadow: "0 10px 25px rgba(0,0,0,0.05)",
                   }}
                 />
+
                 <Legend />
+
                 <Line
                   type="monotone"
                   dataKey="in"
@@ -183,6 +159,7 @@ export default function DashboardPage() {
                   dot={false}
                   name="Stock In"
                 />
+
                 <Line
                   type="monotone"
                   dataKey="out"
@@ -191,47 +168,91 @@ export default function DashboardPage() {
                   dot={false}
                   name="Stock Out"
                 />
+
               </LineChart>
             </ResponsiveContainer>
           </ChartCard>
+        <div className="grid grid-cols-2 gap-3 h-full">
 
-          {/* SUPPLIER DISTRIBUTION */}
-          <ChartCard title="Supplier Distribution">
-            <ResponsiveContainer width="100%" height={350}>
-              <BarChart data={supplierChart}>
-                <defs>
-                  <linearGradient id="colorSupplier" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#0d323b" />
-                    <stop offset="100%" stopColor="#4a9fb8" />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid strokeDasharray="3 3" stroke="#dceaff" />
-                <XAxis
-                  dataKey="supplier_name"
-                  stroke="#0d323b"
-                  opacity={0.6}
-                  angle={-45}
-                  textAnchor="end"
-                  height={100}
-                  tick={{ fontSize: 12 }}
-                />
-                <YAxis stroke="#0d323b" opacity={0.6} />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #dceaff",
-                    borderRadius: "8px",
-                  }}
-                />
-                <Bar
-                  dataKey="count"
-                  fill="url(#colorSupplier)"
-                  radius={[8, 8, 0, 0]}
-                />
-              </BarChart>
-            </ResponsiveContainer>
-          </ChartCard>
+  {/* MATERIALS */}
+  <Link href="/materials" className="group">
+    <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+
+      <div>
+        <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          Materials
+        </p>
+        <p className="text-3xl font-bold text-slate-900 mt-1">
+          {loading ? "—" : stats?.totalMaterials || 0}
+        </p>
+      </div>
+
+      <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+        <Box className="w-6 h-6 text-blue-600" />
+      </div>
+    </div>
+  </Link>
+
+  {/* CATEGORIES */}
+  <Link href="/categories" className="group">
+    <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+
+      <div>
+        <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          Categories
+        </p>
+        <p className="text-3xl font-bold text-slate-900 mt-1">
+          {loading ? "—" : stats?.totalCategories || 0}
+        </p>
+      </div>
+
+      <div className="w-12 h-12 rounded-xl bg-violet-50 flex items-center justify-center">
+        <Tags className="w-6 h-6 text-violet-600" />
+      </div>
+    </div>
+  </Link>
+
+  {/* SUPPLIERS */}
+  <Link href="/suppliers" className="group">
+    <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+
+      <div>
+        <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          Suppliers
+        </p>
+        <p className="text-3xl font-bold text-slate-900 mt-1">
+          {loading ? "—" : stats?.totalSuppliers || 0}
+        </p>
+      </div>
+
+      <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center">
+        <Truck className="w-6 h-6 text-emerald-600" />
+      </div>
+    </div>
+  </Link>
+
+  {/* UNITS */}
+  <Link href="/units" className="group">
+    <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+
+      <div>
+        <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+          Units
+        </p>
+        <p className="text-3xl font-bold text-slate-900 mt-1">
+          {loading ? "—" : stats?.totalUnits || 0}
+        </p>
+      </div>
+
+      <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center">
+        <Ruler className="w-6 h-6 text-amber-600" />
+      </div>
+    </div>
+  </Link>
+
+</div>
         </div>
+
 
         {/* CHARTS GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -257,9 +278,10 @@ export default function DashboardPage() {
                 </Pie>
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #dceaff",
-                    borderRadius: "8px",
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "12px",
+                    boxShadow: "0 10px 25px rgba(0,0,0,0.05)",
                   }}
                 />
               </PieChart>
@@ -279,19 +301,20 @@ export default function DashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#dceaff" />
                 <XAxis
                   dataKey="material_name"
-                  stroke="#0d323b"
+                  stroke="#64748b"
                   opacity={0.6}
                   angle={-45}
                   textAnchor="end"
                   height={100}
                   tick={{ fontSize: 12 }}
                 />
-                <YAxis stroke="#0d323b" opacity={0.6} />
+                <YAxis stroke="#64748b" opacity={0.6} />
                 <Tooltip
                   contentStyle={{
-                    backgroundColor: "#ffffff",
-                    border: "1px solid #dceaff",
-                    borderRadius: "8px",
+                    backgroundColor: "rgba(255,255,255,0.9)",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "12px",
+                    boxShadow: "0 10px 25px rgba(0,0,0,0.05)",
                   }}
                 />
                 <Bar

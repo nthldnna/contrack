@@ -11,19 +11,22 @@ import {
   Menu,
   X,
   LogOut,
-  Settings,
+  Settings, ChevronDown, ChevronUp,
   Tags,
   Ruler,
 } from "lucide-react";
 
 import Image from "next/image";
 import logo from "@/src/app/icon.png";
+import { createClient } from "@/src/utils/supabase/client";
+import { useRouter } from "next/navigation";
+
 type SidebarProps = {
-  userEmail?: string;
+  userName?: string;
   onLogout?: () => Promise<void>;
 };
 
-export default function Sidebar({ userEmail, onLogout }: SidebarProps) {
+export default function Sidebar({ userName, onLogout }: SidebarProps) {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -66,15 +69,21 @@ export default function Sidebar({ userEmail, onLogout }: SidebarProps) {
 
   const pathname = usePathname();
 
-  const handleLogout = async () => {
-    try {
-      setLoading(true);
-      await onLogout?.();
-    } finally {
-      setLoading(false);
-    }
-  };
+  const router = useRouter();
+  const supabase = createClient();
 
+  const handleLogout = async () => {
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    router.replace("/login");
+    router.refresh();
+  };
+  
   return (
     <>
       {/* Mobile Header */}
@@ -159,7 +168,7 @@ export default function Sidebar({ userEmail, onLogout }: SidebarProps) {
 
           <div className="border-t border-pink-100 mt-4 pt-4">
             <p className="text-sm text-gray-500 truncate">
-              {userEmail ?? "Guest"}
+              {userName ?? "Guest"}
             </p>
 
             <button
@@ -223,42 +232,51 @@ export default function Sidebar({ userEmail, onLogout }: SidebarProps) {
               );
             })}
           </nav>
-          {/* Settings Dropdown */}
-          <div>
-            <button
-              onClick={() => setSettingsOpen(!settingsOpen)}
-              className="flex items-center gap-3 p-3 rounded-2xl w-full text-left text-gray-700 hover:bg-white hover:shadow-sm transition"
-            >
-              <Settings size={18} />
-              <span>Settings</span>
-              <span className="ml-auto">{settingsOpen ? "▲" : "▼"}</span>
-            </button>
+          
+{/* Settings Dropdown */}
+<div>
+  <button
+    onClick={() => setSettingsOpen(!settingsOpen)}
+    className="flex items-center gap-3 p-3 rounded-2xl w-full text-left text-gray-700 hover:bg-white hover:shadow-sm transition"
+  >
+    <Settings size={18} />
+    <span>Settings</span>
 
-            {settingsOpen && (
-              <div className="ml-6 mt-2 space-y-2">
-                {settingsItems.map((item) => {
-                  const Icon = item.icon;
-                  const isActive = pathname === item.href;
+    {settingsOpen ? (
+      <ChevronUp size={16} className="ml-auto text-gray-500" />
+    ) : (
+      <ChevronDown size={16} className="ml-auto text-gray-500" />
+    )}
+  </button>
 
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={`flex items-center gap-2 p-2 rounded-xl text-sm transition ${isActive
-                        ? "bg-white shadow-sm font-semibold dark-blue"
-                        : "text-gray-600 hover:bg-white hover:shadow-sm"
-                        }`}
-                    >
-                      <Icon size={16} />
-                      {item.label}
-                    </Link>
-                  );
-                })}
-              </div>
-            )
-            }
-          </div>
+{settingsOpen && (
+  <div className="ml-6 mt-2 pl-4 border-l-2 border-slate-200 space-y-1">
+    {settingsItems.map((item) => {
+      const Icon = item.icon;
+      const isActive = pathname === item.href;
 
+      return (
+        <Link
+          key={item.href}
+          href={item.href}
+          className={`relative flex items-center gap-2 p-2 rounded-xl text-sm transition ${
+            isActive
+              ? "font-semibold dark-blue"
+              : "hover:dark-blue hover:font-semibold"
+          }`}
+        >
+          {isActive && (
+            <span className="absolute -left-[17px] h-6 w-1 rounded-full bg-[var(--dark-blue)]" />
+          )}
+
+          <Icon size={16} />
+          {item.label}
+        </Link>
+      );
+    })}
+  </div>
+)}
+</div>
         </div>
 
         {/* User Card */}
@@ -268,7 +286,7 @@ export default function Sidebar({ userEmail, onLogout }: SidebarProps) {
           </p>
 
           <p className="font-medium text-sm truncate mb-4">
-            {userEmail ?? "Guest"}
+            {userName ?? "Guest"}
           </p>
 
           <button
