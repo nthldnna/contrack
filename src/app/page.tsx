@@ -21,7 +21,7 @@ const navItems = [
 
 
 export default function Home() {
-
+const [isLoggedIn, setIsLoggedIn] = useState(false);
   // Scroll States
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("home");
@@ -101,15 +101,25 @@ export default function Home() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center justify-end gap-2 px-3 py-2 rounded-full border border-green-500/30 bg-green-50 dark:bg-green-500/10 text-green-700 dark:text-green-300 text-[10px] font-mono font-medium leading-none">
+            <div className="hidden md:flex items-center gap-2">
 
-              <span className="relative flex items-center justify-center h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500/40 dark:bg-green-400/40 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500 dark:bg-green-400"></span>
-              </span>
+  {isLoggedIn ? (
+    <a
+      href="/dashboard"
+      className="px-4 py-2 rounded-full bg-black text-white dark:bg-white dark:text-black text-[11px] font-medium hover:opacity-90 transition"
+    >
+      Dashboard
+    </a>
+  ) : (
+    <a
+      href="/login"
+      className="px-4 py-2 rounded-full border border-black/20 dark:border-white/20 text-[11px] font-medium hover:bg-black/5 dark:hover:bg-white/10 transition"
+    >
+      Login
+    </a>
+  )}
 
-              open for work!
-            </div>
+</div>
             {/* MOBILE ACTIONS (theme + menu) */}
             <div className="flex md:hidden items-center gap-2">
 

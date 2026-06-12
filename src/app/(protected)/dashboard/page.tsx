@@ -172,85 +172,85 @@ export default function DashboardPage() {
               </LineChart>
             </ResponsiveContainer>
           </ChartCard>
-        <div className="grid grid-cols-2 gap-3 h-full">
+          <div className="grid grid-cols-2 gap-3 h-full">
 
-  {/* MATERIALS */}
-  <Link href="/materials" className="group">
-    <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            {/* MATERIALS */}
+            <Link href="/materials" className="group">
+              <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 
-      <div>
-        <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-          Materials
-        </p>
-        <p className="text-3xl font-bold text-slate-900 mt-1">
-          {loading ? "—" : stats?.totalMaterials || 0}
-        </p>
-      </div>
+                <div>
+                  <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                    Materials
+                  </p>
+                  <p className="text-3xl font-bold text-slate-900 mt-1">
+                    {loading ? "—" : stats?.totalMaterials || 0}
+                  </p>
+                </div>
 
-      <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
-        <Box className="w-6 h-6 text-blue-600" />
-      </div>
-    </div>
-  </Link>
+                <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center">
+                  <Box className="w-6 h-6 text-blue-600" />
+                </div>
+              </div>
+            </Link>
 
-  {/* CATEGORIES */}
-  <Link href="/categories" className="group">
-    <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            {/* CATEGORIES */}
+            <Link href="/categories" className="group">
+              <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 
-      <div>
-        <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-          Categories
-        </p>
-        <p className="text-3xl font-bold text-slate-900 mt-1">
-          {loading ? "—" : stats?.totalCategories || 0}
-        </p>
-      </div>
+                <div>
+                  <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                    Categories
+                  </p>
+                  <p className="text-3xl font-bold text-slate-900 mt-1">
+                    {loading ? "—" : stats?.totalCategories || 0}
+                  </p>
+                </div>
 
-      <div className="w-12 h-12 rounded-xl bg-violet-50 flex items-center justify-center">
-        <Tags className="w-6 h-6 text-violet-600" />
-      </div>
-    </div>
-  </Link>
+                <div className="w-12 h-12 rounded-xl bg-violet-50 flex items-center justify-center">
+                  <Tags className="w-6 h-6 text-violet-600" />
+                </div>
+              </div>
+            </Link>
 
-  {/* SUPPLIERS */}
-  <Link href="/suppliers" className="group">
-    <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            {/* SUPPLIERS */}
+            <Link href="/suppliers" className="group">
+              <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 
-      <div>
-        <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-          Suppliers
-        </p>
-        <p className="text-3xl font-bold text-slate-900 mt-1">
-          {loading ? "—" : stats?.totalSuppliers || 0}
-        </p>
-      </div>
+                <div>
+                  <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                    Suppliers
+                  </p>
+                  <p className="text-3xl font-bold text-slate-900 mt-1">
+                    {loading ? "—" : stats?.totalSuppliers || 0}
+                  </p>
+                </div>
 
-      <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center">
-        <Truck className="w-6 h-6 text-emerald-600" />
-      </div>
-    </div>
-  </Link>
+                <div className="w-12 h-12 rounded-xl bg-emerald-50 flex items-center justify-center">
+                  <Truck className="w-6 h-6 text-emerald-600" />
+                </div>
+              </div>
+            </Link>
 
-  {/* UNITS */}
-  <Link href="/units" className="group">
-    <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            {/* UNITS */}
+            <Link href="/units" className="group">
+              <div className="h-full min-h-[110px] rounded-2xl bg-white border border-slate-200 p-4 flex items-center justify-between hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
 
-      <div>
-        <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
-          Units
-        </p>
-        <p className="text-3xl font-bold text-slate-900 mt-1">
-          {loading ? "—" : stats?.totalUnits || 0}
-        </p>
-      </div>
+                <div>
+                  <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">
+                    Units
+                  </p>
+                  <p className="text-3xl font-bold text-slate-900 mt-1">
+                    {loading ? "—" : stats?.totalUnits || 0}
+                  </p>
+                </div>
 
-      <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center">
-        <Ruler className="w-6 h-6 text-amber-600" />
-      </div>
-    </div>
-  </Link>
+                <div className="w-12 h-12 rounded-xl bg-amber-50 flex items-center justify-center">
+                  <Ruler className="w-6 h-6 text-amber-600" />
+                </div>
+              </div>
+            </Link>
 
-</div>
+          </div>
         </div>
 
 
@@ -266,7 +266,7 @@ export default function DashboardPage() {
                   cy="50%"
                   labelLine={true}
                   label={({ name, percent }) =>
-                    `${name}: ${(percent * 100).toFixed(0)}%`
+                    `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`
                   }
                   outerRadius={110}
                   fill="#0d323b"
