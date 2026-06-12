@@ -126,7 +126,8 @@ export default function Home() {
               ) : (
                 <a
                   href="/login"
-                  className="btn-sub px-5 py-1.5 rounded-lg text-sm font-medium transition-all hover:shadow-sm"                >
+                  className="btn-sub px-5 py-2.5 rounded-lg text-sm font-medium transition-all hover:shadow-md"
+                >
                   Login
                 </a>
               )}
