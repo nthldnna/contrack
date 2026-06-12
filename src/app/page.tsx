@@ -518,35 +518,6 @@ function MobileMenu({ active, setActive }: { active: string; setActive: (id: str
     </div>
   );
 }
-      }
-      setActive(current);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // run once on mount
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return (
-    <main className="relative min-h-screen z-10 font-[var(--font-outfit)] text-black dark:bg-black dark:text-white transition-colors duration-500">
-
-      {/* HEADER */}
-      <header
-        className={`sticky top-0 z-50 w-full transition-colors duration-500 ${active !== "home" ? "bg-white/80 backdrop-blur-md border-b border-black/5 dark:bg-black" : "bg-transparent"
-          }`}
-      >
-
-        <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
           {/* LEFT */}
           <div className="flex items-center justify-start">
             <h1 className="font-bold text-[20px] md:text-[30px] tracking-wide leading-none">
