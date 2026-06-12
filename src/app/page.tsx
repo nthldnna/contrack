@@ -140,12 +140,13 @@ export default function Home() {
       </header>
 
       {/* HERO SECTION */}
-      <section id="home" className="relative overflow-hidden min-h-screen flex mt-15 justify-center">
+      <section id="home" className="relative overflow-hidden min-h-screen flex items-center justify-center pt-20 pb-20">
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-[-120px] left-[-80px] w-[400px] h-[400px] bg-cyan-400/10 blur-[120px]" />
-          <div className="absolute bottom-[-120px] right-[-80px] w-[400px] h-[400px] bg-blue-500/10 blur-[120px]" />
+          <div className="absolute top-20 left-1/4 w-96 h-96 bg-cyan-400/12 blur-3xl rounded-full" />
+          <div className="absolute bottom-20 right-1/4 w-96 h-96 bg-blue-500/12 blur-3xl rounded-full" />
+          <div className="absolute top-1/2 right-0 w-80 h-80 bg-blue-300/8 blur-3xl rounded-full" />
         </div>
-        <div className="max-w-4xl px-1 text-center items-center space-y-8 ">
+        <div className="max-w-4xl px-4 md:px-6 text-center space-y-8">
 
           {/* Badge */}
           <div
@@ -182,21 +183,18 @@ export default function Home() {
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 pt-4 justify-center px-4">
+          <div className="flex flex-col sm:flex-row gap-4 pt-6 justify-center px-4">
             <a
               href="/signup"
-              className="px-6 py-3.5 rounded-xl text-white font-medium flex items-center gap-2
-bg-gradient-to-r from-[#0D323B] to-[#1E3A8A]
-shadow-md hover:shadow-xl transition-all hover:scale-105"
+              className="px-8 py-3.5 rounded-xl text-white font-semibold flex items-center justify-center gap-2 bg-gradient-to-r from-[#0D323B] via-[#1a4d5c] to-[#1E3A8A] shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-0.5"
             >
-              Get Started <ArrowRight size={16} />
+              Get Started <ArrowRight size={18} />
             </a>
 
             <a
               href="#features"
-              className="px-6 py-3.5 rounded-xl font-medium flex items-center gap-2
-bg-white/60 backdrop-blur-md border border-blue-100
-hover:bg-white transition-all"
+              className="px-8 py-3.5 rounded-xl font-semibold flex items-center justify-center gap-2 bg-white/70 backdrop-blur-sm border-2 border-blue-200 hover:bg-white hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+              style={{ color: "var(--dark-blue)" }}
             >
               Learn More
             </a>
@@ -227,11 +225,11 @@ hover:bg-white transition-all"
       </section>
 
       {/* FEATURES SECTION */}
-      <section id="features" className="py-24 bg-white/30 backdrop-blur relative min-h-screen flex mt-15 justify-center">
+      <section id="features" className="py-32 bg-gradient-to-b from-white/40 via-white/50 to-white/30 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <h2
-              className="text-4xl md:text-5xl font-bold mb-2 mt-6"
+              className="text-4xl md:text-5xl font-bold mb-4"
               style={{ color: "var(--dark-blue)" }}
             >
               Powerful Features
@@ -244,7 +242,7 @@ hover:bg-white transition-all"
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 icon: Package,
@@ -264,22 +262,22 @@ hover:bg-white transition-all"
             ].map((feature, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-3xl border border-white/40
-bg-white/70 backdrop-blur-md
-transition-all duration-300
-hover:shadow-xl hover:-translate-y-2"
+                className="group p-8 rounded-3xl border-2 bg-white/80 backdrop-blur-md transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
+                style={{ borderColor: "var(--light-blue)" }}
               >
-                <feature.icon
-                  size={32}
-                  style={{ color: "var(--dark-blue)", marginBottom: "1rem" }}
-                />
+                <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl mb-5 transition-all duration-300 group-hover:scale-110" style={{ backgroundColor: "rgba(220, 234, 255, 0.6)" }}>
+                  <feature.icon
+                    size={28}
+                    style={{ color: "var(--dark-blue)" }}
+                  />
+                </div>
                 <h3
                   className="text-xl font-bold mb-3"
                   style={{ color: "var(--dark-blue)" }}
                 >
                   {feature.title}
                 </h3>
-                <p style={{ color: "var(--dark-blue)", opacity: 0.6 }}>
+                <p className="leading-relaxed" style={{ color: "var(--dark-blue)", opacity: 0.65 }}>
                   {feature.description}
                 </p>
               </div>
@@ -289,8 +287,9 @@ hover:shadow-xl hover:-translate-y-2"
       </section>
 
       {/* WHY US SECTION */}
-      <section id="why-us" className="py-24 bg-gradient-to-b from-transparent to-white/40">        <div className="max-w-7xl mx-auto px-4 md:px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+      <section id="why-us" className="py-32 bg-gradient-to-b from-transparent to-white/50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
             <h2
               className="text-4xl font-bold mb-8"
@@ -352,37 +351,38 @@ hover:shadow-xl hover:-translate-y-2"
       </section>
 
       {/* CONTACT SECTION */}
-      <section id="contact" className="py-24 bg-white/50 backdrop-blur">
+      <section id="contact" className="py-32 bg-gradient-to-b from-white/40 to-white/20">
         <div className="max-w-4xl mx-auto px-4 md:px-6 text-center">
           <h2
-            className="text-4xl md:text-5xl font-bold mb-6"
+            className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
             style={{ color: "var(--dark-blue)" }}
           >
             Ready to Transform Your Inventory?
           </h2>
 
           <p
-            className="text-lg mb-8 max-w-2xl mx-auto"
+            className="text-lg mb-10 max-w-2xl mx-auto leading-relaxed"
             style={{ color: "var(--dark-blue)", opacity: 0.7 }}
           >
             Join hundreds of businesses already using ConTrack to streamline their operations
             and reduce costs.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
             <a
               href="/signup"
-              className="px-8 py-4 rounded-lg text-white font-medium text-lg flex items-center justify-center gap-2 hover:shadow-lg transition-all hover:scale-105"
+              className="px-8 py-4 rounded-xl font-semibold text-white text-lg flex items-center justify-center gap-2 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-0.5"
               style={{ backgroundColor: "var(--dark-blue)" }}
             >
               Start Free Today <ArrowRight size={20} />
             </a>
             <a
               href="mailto:nthldnna@gmail.com"
-              className="px-8 py-4 rounded-lg font-medium text-lg flex items-center justify-center gap-2 hover:shadow-md transition-all"
+              className="px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-2 border-2 hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               style={{
                 color: "var(--dark-blue)",
-                border: "1.5px solid var(--light-blue)",
+                borderColor: "var(--light-blue)",
+                backgroundColor: "white/60",
               }}
             >
               Contact Sales
@@ -406,19 +406,19 @@ hover:shadow-xl hover:-translate-y-2"
 
       {/* FOOTER */}
       <footer
-        className="py-8 border-t"
-        style={{ borderColor: "var(--light-blue)", backgroundColor: "white/40" }}
+        className="py-8 border-t backdrop-blur-sm"
+        style={{ borderColor: "var(--light-blue)", backgroundColor: "rgba(255, 255, 255, 0.6)" }}
       >
-        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between">
-          <p style={{ color: "var(--dark-blue)", opacity: 0.6 }} className="text-sm">
+        <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p style={{ color: "var(--dark-blue)", opacity: 0.6 }} className="text-sm font-medium">
             © 2024 ConTrack. All rights reserved.
           </p>
-          <div className="flex gap-6 mt-4 md:mt-0">
+          <div className="flex gap-8 mt-4 md:mt-0">
             {["Privacy", "Terms", "Contact"].map((item) => (
               <a
                 key={item}
                 href="#"
-                className="text-sm font-medium hover:underline"
+                className="text-sm font-medium transition-opacity hover:opacity-70"
                 style={{ color: "var(--dark-blue)" }}
               >
                 {item}
@@ -438,7 +438,7 @@ function MobileMenu({ active, setActive }: { active: string; setActive: (id: str
     <div className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="p-2 rounded-lg transition-all"
+        className="p-2.5 rounded-lg transition-all duration-200 hover:shadow-md"
         style={{ backgroundColor: "var(--light-blue)" }}
       >
         {open ? <X size={20} /> : <Menu size={20} />}
@@ -448,10 +448,10 @@ function MobileMenu({ active, setActive }: { active: string; setActive: (id: str
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div
-            className="absolute right-0 mt-3 w-48 rounded-xl shadow-lg overflow-hidden z-50 border"
-            style={{ backgroundColor: "white", borderColor: "var(--light-blue)" }}
+            className="absolute right-0 mt-4 w-56 rounded-2xl shadow-2xl overflow-hidden z-50 border-2 backdrop-blur-sm"
+            style={{ backgroundColor: "white/95", borderColor: "var(--light-blue)" }}
           >
-            <div className="p-4 space-y-2">
+            <div className="p-3 space-y-2">
               {navItems.map(({ id, label }) => (
                 <a
                   key={id}
@@ -460,7 +460,7 @@ function MobileMenu({ active, setActive }: { active: string; setActive: (id: str
                     setActive(id);
                     setOpen(false);
                   }}
-                  className="block px-4 py-2 rounded-lg text-sm font-medium transition-all"
+                  className="block px-4 py-3 rounded-lg text-sm font-semibold transition-all duration-200"
                   style={{
                     color: active === id ? "white" : "var(--dark-blue)",
                     backgroundColor: active === id ? "var(--dark-blue)" : "transparent",
