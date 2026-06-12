@@ -14,6 +14,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import logo from "@/src/app/icon.png";
+import envelope from "@/src/assets/images/envelope.png";
 
 const navItems = [
   { id: "home", label: "HOME" },
@@ -518,30 +519,6 @@ function MobileMenu({ active, setActive }: { active: string; setActive: (id: str
     </div>
   );
 }
-          {/* LEFT */}
-          <div className="flex items-center justify-start">
-            <h1 className="font-bold text-[20px] md:text-[30px] tracking-wide leading-none">
-              ConTrack
-            </h1>
-          </div>
-
-          {/* DESKTOP NAV */}
-          <nav className="hidden md:flex justify-center">
-            <div className="flex items-center rounded-full bg-white/40  border border-black/50 dark:border-white/50 dark:bg-black font-semibold">		{navItems.map(({ id, label }) => {
-              const isActive = active === id;
-
-              return (
-                <a
-                  key={id}
-                  href={`#${id}`}
-                  onClick={() => setActive(id)}
-                  className={`
-						px-4 py-2 rounded-full text-[10px] tracking-wide
-						transition-all duration-200
-						${isActive
-                      ? "bg-black text-white font-semibold dark:bg-white dark:text-black"
-                      : "text-black/70 dark:text-white/70 hover:bg-black/5"
-                    }
 					`}
                 >
                   {label}
