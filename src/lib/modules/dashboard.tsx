@@ -76,3 +76,26 @@ export async function getTopMaterials() {
 
   return data || [];
 }
+
+export async function getSupplierDistribution() {
+  const { data, error } = await supabase
+    .from("materials")
+    .select("supplier_id, suppliers!inner(supplier_name)");
+
+  console.log("[v0] Supplier distribution data:", data, error);
+
+  const map: Record<string, number> = {};
+
+  (data || []).forEach((m: any) => {
+    const name = m.suppliers?.supplier_name || "Unknown";
+    map[name] = (map[name] || 0) + 1;
+  });
+
+  const result = Object.entries(map).map(([name, value]) => ({
+    supplier_name: name,
+    count: value,
+  }));
+
+  console.log("[v0] Supplier distribution result:", result);
+  return result;
+}
