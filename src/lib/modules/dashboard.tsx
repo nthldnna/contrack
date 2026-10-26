@@ -82,7 +82,7 @@ export async function getSupplierDistribution() {
     .from("materials")
     .select("supplier_id, suppliers!inner(supplier_name)");
 
-  console.log("[v0] Supplier distribution data:", data, error);
+
 
   const map: Record<string, number> = {};
 
@@ -96,6 +96,36 @@ export async function getSupplierDistribution() {
     count: value,
   }));
 
-  console.log("[v0] Supplier distribution result:", result);
+
   return result;
+}
+
+export async function getLowestMaterials() {
+  const { data } = await supabase
+    .from("materials")
+    .select("material_name, quantity")
+    .order("quantity", { ascending: true })
+    .limit(5);
+
+  return data || [];
+}
+
+export async function getRecentStockMovements() {
+  const [{ data: stocks }, { data: materials }] = await Promise.all([
+    supabase
+      .from("stocks")
+      .select("id, material_id, quantity_in, quantity_out, reference, created_at")
+      .order("created_at", { ascending: false })
+      .limit(6),
+    supabase.from("materials").select("id, material_name"),
+  ]);
+
+  const names = Object.fromEntries(
+    (materials || []).map((m: any) => [m.id, m.material_name])
+  );
+
+  return (stocks || []).map((s: any) => ({
+    ...s,
+    material_name: names[s.material_id] || "Unknown material",
+  }));
 }

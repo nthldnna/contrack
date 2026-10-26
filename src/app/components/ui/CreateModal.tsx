@@ -16,11 +16,11 @@ export default function CreateModal({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title={title}>
-      <div className="space-y-4">
+      <div className="space-y-3">
 
         {fields.map((f: any) => (
           <div key={f.name}>
-            <label className="text-sm text-gray-600">
+            <label htmlFor={`field-${f.name}`} className="field-label">
               {f.label}
             </label>
 
@@ -29,8 +29,8 @@ export default function CreateModal({
             ========================= */}
             {f.type === "select" ? (
               <select
-                className="w-full mt-1 px-3 py-2 border border-black/10 rounded-lg   focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent
-                transition shadow-sm"
+                id={`field-${f.name}`}
+                className="field"
                 value={form[f.name] || ""}
                 onChange={(e) => handleChange(f.name, e.target.value)}
               >
@@ -44,8 +44,8 @@ export default function CreateModal({
               </select>
             ) : (
               <input
-                className="w-full mt-1 px-3 py-2 border border-black/10 rounded-lg   focus:outline-none focus:ring-2 focus:ring-gray-400 focus:border-transparent
-                transition shadow-sm"
+                id={`field-${f.name}`}
+                className="field"
                 type={f.type || "text"}
                 value={form[f.name] || ""}
                 onChange={(e) => handleChange(f.name, e.target.value)}
@@ -55,18 +55,14 @@ export default function CreateModal({
         ))}
 
         {/* ACTIONS */}
-        <div className="flex justify-end gap-2 pt-2">
-          <button
-            onClick={onClose} className="px-4 py-2 btn-main rounded-xl font-semibold
-              shadow-md hover:shadow-lg transition transform hover:scale-[1.01]"
-          >
+        <div className="flex justify-end gap-2 pt-3">
+          <button onClick={onClose} className="pill pill-flat">
             Cancel
           </button>
 
           <button
             onClick={() => onSubmit(form)}
-            className="px-4 py-2 btn-sub rounded-xl font-semibold
-              shadow-md hover:shadow-lg transition transform hover:scale-[1.01]"
+            className="pill pill-dark"
           >
             Create
           </button>

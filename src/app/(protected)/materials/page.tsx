@@ -5,6 +5,7 @@ import DataTable from "@/src/app/components/ui/DataTable";
 import CreateModal from "@/src/app/components/ui/CreateModal";
 import UpdateModal from "@/src/app/components/ui/UpdateModal";
 import DeleteModal from "@/src/app/components/ui/DeleteModal";
+import PageHeader from "@/src/app/components/ui/PageHeader";
 
 import {
   getMaterials,
@@ -131,19 +132,14 @@ export default function MaterialsPage() {
   };
 
   return (
-    <div className="p-6 space-y-4">
-
-      {/* HEADER */}
-      <div className="flex justify-between items-center">
-        <h1 className="text-xl font-semibold">Materials</h1>
-
-        <button
-          onClick={() => setIsCreateOpen(true)}
-          className="px-4 py-2 btn-sub border border-black/10 py-2 rounded-sm"
-        >
-          + Add Material
-        </button>
-      </div>
+    <div className="px-4 md:px-6 py-5 space-y-4">
+      <PageHeader
+        section="Workspace"
+        title="Materials"
+        count={loading ? undefined : data.length}
+        actionLabel="Add material"
+        onAction={() => setIsCreateOpen(true)}
+      />
 
       {/* TABLE */}
       <DataTable

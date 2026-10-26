@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { Pencil, Trash2, ArrowUpDown } from "lucide-react";
+import { Pencil, Trash2, ArrowUpDown, ArrowUp, ArrowDown, Search } from "lucide-react";
 
 type Column = {
   key: string;
@@ -62,111 +62,122 @@ export default function DataTable<T extends Record<string, any>>({
       setSortOrder("asc");
     }
   };
-  return (
-    <div className="w-full">
-      {/* Card */}
-      <div className="overflow-hidden">
 
-        {/* Search */}
-        <div className="mb-4 border-b border-gray-100">
+  const hasActions = Boolean(onEdit || onDelete);
+
+  return (
+    <div className="card overflow-hidden">
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center gap-2 p-3 border-b-2 border-ink bg-[#F4F9FA]">
+        <div className="relative flex-1 min-w-[180px] max-w-sm">
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted" aria-hidden="true" />
+          <label htmlFor="table-search" className="sr-only">
+            Search
+          </label>
           <input
+            id="table-search"
             type="text"
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="px-3 py-2 border border-black/10 rounded-lg"
+            className="field field-round h-9 pl-8 text-[13px] border-[1.5px]"
           />
         </div>
+        <span className="label text-[10px] text-muted ml-auto">
+          {loading ? "Loading" : `${processedData.length} of ${data.length}`}
+        </span>
+      </div>
 
-        {/* Table */}
-        <div className="overflow-x-auto">
-          <table className="min-w-full text-xs border border-black/10">
-            <thead className="bg-[var(--dark-blue)] text-white uppercase tracking-wider">
-              <tr>
-                {columns.map((col) => (
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="min-w-full text-[13px] tabular-nums">
+          <thead>
+            <tr className="border-b-2 border-ink">
+              {columns.map((col) => {
+                const active = sortKey === col.key;
+                const SortIcon = !active ? ArrowUpDown : sortOrder === "asc" ? ArrowUp : ArrowDown;
+                return (
                   <th
                     key={col.key}
-                    onClick={() => handleSort(col.key)}
-                    className="text-left px-4 py-2 font-medium cursor-pointer select-none hover:bg-opacity-90"
+                    aria-sort={active ? (sortOrder === "asc" ? "ascending" : "descending") : undefined}
+                    className="text-left font-normal p-0"
                   >
-                    <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => handleSort(col.key)}
+                      className="label text-[10px] w-full flex items-center gap-1 px-3.5 py-2.5 hover:bg-paper whitespace-nowrap"
+                    >
                       {col.label}
-                      <ArrowUpDown size={12} className="opacity-60" />
-                    </div>
+                      <SortIcon size={11} className={active ? "" : "opacity-40"} />
+                    </button>
                   </th>
-                ))}
+                );
+              })}
 
-                <th className="px-4 py-2 text-right font-medium">
-                  Actions
+              {hasActions && (
+                <th className="px-3.5 py-2.5">
+                  <span className="sr-only">Actions</span>
                 </th>
+              )}
+            </tr>
+          </thead>
+
+          <tbody>
+            {loading ? (
+              <tr>
+                <td colSpan={columns.length + 1} className="text-center py-8 text-muted label text-[10px]">
+                  Loading...
+                </td>
               </tr>
-            </thead>
+            ) : processedData.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length + 1} className="text-center py-8 text-muted text-sm">
+                  {search ? `Nothing matches "${search}".` : "No records yet."}
+                </td>
+              </tr>
+            ) : (
+              processedData.map((row, i) => (
+                <tr key={i} className="border-b-[1.5px] border-rule last:border-b-0 hover:bg-paper transition-colors">
+                  {columns.map((col, ci) => (
+                    <td
+                      key={col.key}
+                      className={`px-3.5 py-2.5 whitespace-nowrap ${ci === 0 ? "font-semibold" : "text-[#3B3934]"}`}
+                    >
+                      {row[col.key] ?? "—"}
+                    </td>
+                  ))}
 
-            <tbody className="divide-y divide-gray-100">
-              {loading ? (
-                <tr>
-                  <td
-                    colSpan={columns.length + 1}
-                    className="text-center py-6 text-gray-400 text-xs"
-                  >
-                    Loading...
-                  </td>
-                </tr>
-              ) : processedData.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={columns.length + 1}
-                    className="text-center py-6 text-gray-400 text-xs"
-                  >
-                    No records found
-                  </td>
-                </tr>
-              ) : (
-                processedData.map((row, i) => (
-                  <tr
-                    key={i}
-                    className="hover:bg-gray-50 transition"
-                  >
-                    {columns.map((col) => (
-                      <td
-                        key={col.key}
-                        className="px-4 py-2 text-gray-700 whitespace-nowrap"
-                      >
-                        {row[col.key]}
-                      </td>
-                    ))}
-
-                    <td className="px-4 py-2">
-                      <div className="flex justify-end gap-1.5">
+                  {hasActions && (
+                    <td className="px-2 py-1">
+                      <div className="flex justify-end gap-0.5">
                         {onEdit && (
                           <button
                             onClick={() => onEdit(row)}
-                            className="p-1.5 rounded-md text-blue-600 bg-blue-50
-                                   hover:bg-blue-100 transition"
+                            className="inline-grid place-items-center w-8 h-8 rounded-lg border-[1.5px] border-transparent hover:border-ink hover:bg-white"
+                            aria-label="Edit"
                             title="Edit"
                           >
-                            <Pencil size={14} />
+                            <Pencil size={15} />
                           </button>
                         )}
 
                         {onDelete && (
                           <button
                             onClick={() => onDelete(row)}
-                            className="p-1.5 rounded-md text-red-600 bg-red-50
-                                   hover:bg-red-100 transition"
+                            className="inline-grid place-items-center w-8 h-8 rounded-lg border-[1.5px] border-transparent text-[#A3362E] hover:border-ink hover:bg-blush"
+                            aria-label="Delete"
                             title="Delete"
                           >
-                            <Trash2 size={14} />
+                            <Trash2 size={15} />
                           </button>
                         )}
                       </div>
                     </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                  )}
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
       </div>
     </div>
   );

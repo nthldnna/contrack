@@ -11,10 +11,10 @@ export default async function ProtectedLayout({
   const userName = profile?.name || user?.email || "User";
 
   return (
-    <div className="flex">
+    <div className="grid-paper min-h-screen bg-paper">
       <Sidebar userName={userName} />
 
-      <main className="md:ml-72 pt-16 md:pt-6 p-6 w-full">
+      <main className="md:ml-60 pt-14 md:pt-0 min-w-0">
         {children}
       </main>
     </div>

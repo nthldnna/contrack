@@ -8,18 +8,15 @@ export default function DeleteModal({
   onConfirm,
 }: any) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title={title}>
-      <p className="text-gray-600 mb-6">{description}</p>
+    <Modal isOpen={isOpen} onClose={onClose} title={title} tone="butter">
+      <p className="text-sm leading-relaxed text-[#3B3934] mb-5">{description}</p>
 
       <div className="flex justify-end gap-2">
-        <button onClick={onClose} className="px-4 py-2 bg-gray-100 rounded-lg">
+        <button onClick={onClose} className="pill pill-flat">
           Cancel
         </button>
 
-        <button
-          onClick={onConfirm}
-          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
-        >
+        <button onClick={onConfirm} className="pill bg-[#A3362E] text-white">
           Delete
         </button>
       </div>
